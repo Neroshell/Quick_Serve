@@ -1,0 +1,24 @@
+:root {
+  --primary-color: #007f04; /* Green - Primary for Action buttons, checkmarks, or any positive confirmation */ 
+  --secondary-color: #f1c823; /* Orange - Secondary Use For: Alerts, notifications, or to highlight special items or deals on the menu.*/
+  --accent-color: #424242; /* Dark Gray - Accent For Text, borders, icons, or any elements that require a subtle yet strong presence. */ 
+  --background-color: #ffffff; /* Off-white Background */
+  --text-color: #333333; /* Optional: For main text to ensure readability */
+  --light-hover : #ddffdf;
+  --main-background : #f7fff8;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  background-color: var(--background-color);
+}
+
+/* #333333

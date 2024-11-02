@@ -1,0 +1,29 @@
+
+  .logo_img{
+   height: 60px;
+   object-fit: contain;
+
+  }
+
+ 
+
+  .Appbar{
+    background-color: var(--background-color) !important;
+    box-shadow: none !important;
+    color: black !important;
+   
+   
+  }
+
+  .brand_name{
+    font-weight: bolder;
+    color: black ;
+    text-decoration: none;
+    margin-left: 0px !important ;
+    font-size: 23px !important;
+  
+  } 
+                 
+                    
+                   
+                    

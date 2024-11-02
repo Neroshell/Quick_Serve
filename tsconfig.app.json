@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",                // JavaScript version to target
+    "useDefineForClassFields": true,   // Use define for class fields (ESNext)
+    "lib": ["ES2020", "DOM", "DOM.Iterable"], // Libraries to include
+    "module": "ESNext",                // Module system (ES modules for modern bundlers)
+    "skipLibCheck": true,              // Skip type checking of declaration files
+    "moduleResolution": "bundler",     // Resolve modules for modern bundlers
+    "allowImportingTsExtensions": true, // Allow importing TypeScript files
+    "isolatedModules": true,           // Ensure all files can be safely transpiled independently
+    "moduleDetection": "force",        // Force module detection
+    "noEmit": true,                    // Do not emit output files
+    "jsx": "react-jsx",                // JSX transformation for React
+
+    /* Linting options */
+    "strict": true,                    // Enable all strict type-checking options
+    "noUnusedLocals": true,            // Report errors on unused local variables
+    "noUnusedParameters": true,        // Report errors on unused parameters
+    "noFallthroughCasesInSwitch": true, // Report errors for fall-through cases in switch statements
+
+    /* Path aliases and base URL */
+    "baseUrl": "./",                   // Base directory for resolving non-relative module names
+    "paths": {
+      "@/*": ["src/*"]                 // Path alias for easier imports
+    }
+  },
+  "include": [
+    "src/**/*"                        // Include all files in the src directory
+  ],
+  "exclude": [
+    "node_modules",                   // Exclude node_modules directory
+    "build"                           // Exclude build directory
+  ]
+}
