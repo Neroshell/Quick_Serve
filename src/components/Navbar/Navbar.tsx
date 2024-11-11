@@ -10,6 +10,8 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import style from './Navbar.module.css';
+import { usePageContext } from '../Context/PageContext.tsx';
+
 
 interface NavbarProps {
   logoSrc: string;
@@ -18,9 +20,14 @@ interface NavbarProps {
   onLoginClick?: () => void;
   onPageClick?: (page: string) => void;
   additionalActions?: React.ReactNode;
+ 
+  
+
+  
 }
 
-const Navbar: React.FC<NavbarProps> = ({ logoSrc, title, pages, onLoginClick, onPageClick, additionalActions }) => {
+const Navbar: React.FC<NavbarProps> = ({ logoSrc, title, pages, onLoginClick, onPageClick, additionalActions}) => {
+  const { currentPage } = usePageContext(); 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -100,8 +107,9 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc, title, pages, onLoginClick, on
                   my: 2,
                   color: 'var(--text-color)',
                   display: 'block',
+                  backgroundColor: page === currentPage ? "var(--light-hover)" : "transparent",
                   '&:hover': {
-                    backgroundColor: 'var(--light-hover)',
+                  
                     color: 'var(--primary-color)',
                   },
                 }}

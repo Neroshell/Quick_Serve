@@ -20,6 +20,7 @@ const Food: React.FC<FoodProps> = ({ onPageClick }) => {
         pages={['Order Food', 'Order Drinks']}
         onLoginClick={handleLoginClick}
         onPageClick={onPageClick} // Pass the onPageClick to Navbar
+        
       />
       <div>
         <SideBar 

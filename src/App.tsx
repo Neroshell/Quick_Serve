@@ -1,18 +1,19 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Waiter from '@/pages/Waiter.tsx';
-
+import Waiter from '@/pages/Waiter';
+import  AppProviders  from '@/components/Context/AppProviders';
 
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/waiter" element={<Waiter />} />
-      
-        <Route path="/" element={<h1>Welcome! Please choose a page.</h1>} />
-      </Routes>
-    </Router>
+    <AppProviders> {/* Wrap the whole app with PageProvider */}
+      <Router>
+        <Routes>
+          <Route path="/waiter" element={<Waiter />} />
+          <Route path="/" element={<h1>Hello choos eyour page</h1>} />
+        </Routes>
+      </Router>
+    </AppProviders>
   );
 }
 
