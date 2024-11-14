@@ -1,11 +1,13 @@
+import React, { useState } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { ListItemButton } from '@mui/material';
-import Box from '@mui/material/Box';
+import { ListItemButton, Box, Fab, Modal, Typography } from '@mui/material';
+import OrderSummary from '../OrderSummary';
 
 interface SideBarProps {
   firstText: string;
@@ -14,6 +16,12 @@ interface SideBarProps {
 }
 
 const SideBar: React.FC<SideBarProps> = ({ firstText, secondText, thirdText }) => {
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  // Toggle Modal Visibility
+  const handleOpenModal = () => setModalOpen(true);
+  const handleCloseModal = () => setModalOpen(false);
+
   return (
     <div>
       <Box
@@ -25,123 +33,68 @@ const SideBar: React.FC<SideBarProps> = ({ firstText, secondText, thirdText }) =
           position: 'fixed',
           top: '69px',
           width: '20%',
+          border: '2px solid blue',
         }}
       >
         <List component="nav">
-          <ListItem disablePadding sx={{ width: '100%', margin: '0 auto', ':hover': {
-                backgroundColor: 'var(--light-hover)',
-                borderRadius: '15px ',
-                color: 'var(--primary-color)',
-                fontWeight: 'bolder'
-              },  
-          }}>
+          <ListItem disablePadding>
             <Box sx={{ width: '80%', margin: '0 auto', display: 'flex', justifyContent: 'center' }}>
-              <ListItemButton
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                  gap: '10px',
-                  padding: '8px 16px',
-                  ':hover': {
-                     backgroundColor: 'transparent',
-                  },
-                }}
-              >
-                <HomeIcon fontSize="medium" sx={{ minWidth: '24px', maxWidth: '24px' }} />
-                <ListItemText
-                  primary={firstText}  // First text from props
-                  sx={{
-                    margin: 0,
-                    minWidth: 'auto',
-                    flex: '1',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                    ':hover': {
-                      backgroundColor: 'transparent',
-                    },
-                  }}
-                />
-              </ListItemButton>
-            </Box>
-          </ListItem>
-        
-          <ListItem disablePadding sx={{ width: '100%', margin: '0 auto', ':hover': {
-                backgroundColor: 'var(--light-hover)',
-                borderRadius: '15px',
-                color: 'var(--primary-color)',
-                fontWeight: 'bolder'
-              },  }}>
-            <Box sx={{ width: '80%', margin: '0 auto', display: 'flex', ':hover': {
-              backgroundColor: 'var(--light-hover)',
-            } }}>
-              <ListItemButton
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                  width: '50%',
-                  gap: '10px',
-                  padding: '8px 16px',
-                  ':hover': {
-                     backgroundColor: 'transparent',
-                  },
-                }}
-              >
-                <BorderColorIcon fontSize="medium" sx={{ minWidth: '24px', maxWidth: '24px' }} />
-                <ListItemText
-                  primary={secondText}  // Second text from props
-                  sx={{
-                    margin: '0 auto',
-                    minWidth: 'auto',
-                    flex: '1',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  }}
-                />
+              <ListItemButton sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <HomeIcon fontSize="medium" />
+                <ListItemText primary={firstText} />
               </ListItemButton>
             </Box>
           </ListItem>
 
-          <ListItem disablePadding sx={{ margin: '0 auto', width: '100%', ':hover': {
-                backgroundColor: 'var(--light-hover)',
-                borderRadius: '15px', 
-                color: 'var(--primary-color)',
-                fontWeight: 'bolder'
-              }, }}>
+          <ListItem disablePadding>
+            <Box sx={{ width: '80%', margin: '0 auto', display: 'flex' }}>
+              <ListItemButton sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <BorderColorIcon fontSize="medium" />
+                <ListItemText primary={secondText} />
+              </ListItemButton>
+            </Box>
+          </ListItem>
+
+          <ListItem disablePadding>
             <Box sx={{ width: '80%', margin: '0 auto', display: 'flex', justifyContent: 'center' }}>
-              <ListItemButton
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                  width: '50%',
-                  gap: '10px',
-                  padding: '8px 16px',
-                  ':hover': {
-                     backgroundColor: 'transparent',
-                  },
-                }}
-              >
-                <ForwardToInboxIcon fontSize="medium" sx={{ minWidth: '24px', maxWidth: '24px' }} />
-                <ListItemText
-                  primary={thirdText}  // Third text from props
-                  sx={{
-                    margin: 0,
-                    minWidth: 'auto',
-                    flex: '1',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  }}
-                />
+              <ListItemButton sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <ForwardToInboxIcon fontSize="medium" />
+                <ListItemText primary={thirdText} />
               </ListItemButton>
             </Box>
           </ListItem>
         </List>
       </Box>
+
+      {/* Floating Action Button */}
+      <Fab
+          
+        aria-label="order-summary"
+        sx={{ position: 'fixed', bottom: 20, left: 20, background: 'var(--primary-color)' }}
+        onClick={handleOpenModal}
+      >
+        <ShoppingCartIcon sx={{color: 'white' }} />
+      </Fab>
+
+      {/* Modal for Order Summary */}
+      <Modal open={isModalOpen} onClose={handleCloseModal}>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '400px',
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: '10px',
+          }}
+        >
+          
+          <OrderSummary />
+        </Box>
+      </Modal>
     </div>
   );
 };

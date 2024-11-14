@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Waiter from '@/pages/Waiter';
 import  AppProviders  from '@/components/Context/AppProviders';
+import OrderSummary from './components/OrderSummary';
 
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/waiter" element={<Waiter />} />
-          <Route path="/" element={<h1>Hello choos eyour page</h1>} />
+          <Route path="/" element={<OrderSummary/>} />
         </Routes>
       </Router>
     </AppProviders>

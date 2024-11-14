@@ -57,10 +57,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ foodName, price, image }) => {
             color: isSelected ? "white" : 'var(--primary-color)',
             borderColor: 'var(--primary-color)',
             backgroundColor: isSelected ? 'green' : '', 
-            '&:hover': {
-              backgroundColor: 'var(--primary-color)', // Set the background color on hover
-              color: 'white', // Set the text color on hover
-            },
+            
           }}
           
 
