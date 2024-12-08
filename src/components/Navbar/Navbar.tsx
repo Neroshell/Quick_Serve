@@ -12,7 +12,6 @@ import MenuItem from '@mui/material/MenuItem';
 import style from './Navbar.module.css';
 import { usePageContext } from '../Context/PageContext.tsx';
 
-
 interface NavbarProps {
   logoSrc: string;
   title: string;
@@ -20,14 +19,10 @@ interface NavbarProps {
   onLoginClick?: () => void;
   onPageClick?: (page: string) => void;
   additionalActions?: React.ReactNode;
- 
-  
-
-  
 }
 
-const Navbar: React.FC<NavbarProps> = ({ logoSrc, title, pages, onLoginClick, onPageClick, additionalActions}) => {
-  const { currentPage } = usePageContext(); 
+const Navbar: React.FC<NavbarProps> = ({ logoSrc, title, pages, onLoginClick, onPageClick, additionalActions }) => {
+  const { currentPage } = usePageContext();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -40,15 +35,16 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc, title, pages, onLoginClick, on
 
   const handlePageClick = (page: string) => {
     if (onPageClick) {
-      onPageClick(page);  // Trigger the onPageClick prop callback
+      onPageClick(page);
     }
-    handleCloseNavMenu(); // Close the menu after selection (for mobile)
+    handleCloseNavMenu();
   };
 
   return (
     <AppBar className={style.Appbar} position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          {/* Logo Section */}
           <IconButton>
             <img className={style.logo_img} src={logoSrc} alt="Logo" />
           </IconButton>
@@ -60,7 +56,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc, title, pages, onLoginClick, on
             component="a"
             href="/"
             sx={{
-              display: { xs: 'block', md: 'block' },
+              display: { xs: 'block', sm: 'block' },
               fontWeight: 'bold',
             }}
           >
@@ -68,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc, title, pages, onLoginClick, on
           </Typography>
 
           {/* Mobile Menu Icon */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none', md: 'none' } }}>
             <IconButton
               sx={{ marginLeft: 'auto' }}
               size="large"
@@ -88,7 +84,6 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc, title, pages, onLoginClick, on
               transformOrigin={{ vertical: 'top', horizontal: 'left' }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={() => handlePageClick(page)}>
@@ -98,23 +93,27 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc, title, pages, onLoginClick, on
             </Menu>
           </Box>
 
-          {/* Desktop Menu */}
-          <Box sx={{ flexGrow: 1, ml: 5, display: { xs: 'none', md: 'flex' } }}>
+          {/* Desktop Menu Logic for Tablet/iPad screens */}
+          <Box
+            sx={{
+              flexGrow: 1,
+              ml: 5,
+              display: { xs: 'none', sm: 'flex', md: 'flex' }, // Show this from tablets and above
+            }}
+          >
             {pages.map((page) => (
               <Button
                 key={page}
                 sx={{
                   my: 2,
                   color: 'var(--text-color)',
-                  display: 'block',
-                  backgroundColor: page === currentPage ? "var(--light-hover)" : "transparent",
+                  backgroundColor: page === currentPage ? 'var(--light-hover)' : 'transparent',
                   '&:hover': {
-                  
                     color: 'var(--primary-color)',
                   },
                 }}
                 onClick={() => {
-                  onPageClick && onPageClick(page); // Trigger `onPageClick` if it exists
+                  onPageClick && onPageClick(page);
                 }}
               >
                 {page}
@@ -122,13 +121,13 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc, title, pages, onLoginClick, on
             ))}
           </Box>
 
-          {/* Login Button (Desktop Only) */}
+          {/* Login Button Logic */}
           {onLoginClick && (
             <Button
               variant="contained"
               onClick={onLoginClick}
               sx={{
-                display: { xs: 'none', md: 'flex' },
+                display: { xs: 'none', sm: 'flex', md: 'flex' },
                 bgcolor: 'var(--primary-color)',
                 padding: '10px 30px',
                 mr: 4,

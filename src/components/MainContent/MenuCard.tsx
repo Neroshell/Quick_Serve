@@ -31,15 +31,21 @@ const MenuCard: React.FC<MenuCardProps> = ({ foodName, price, image, id }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: '20%', maxHeight: '300px' }}>
+    <Card   sx={{
+      width: { xs: '80%', sm: '40%', md: '50%', lg: '20%' }, // Responsive maxWidth
+      maxHeight: '300px', // Fixed maxHeight
+      borderRadius: { 
+        xs: '5px', 
+        md: '5px', 
+       
+      }, // Responsive border
+    }}>
       <CardActionArea>
         <CardMedia component="img" height="140" image={image} alt={foodName} />
         <CardContent
           sx={{
             textAlign: 'center',
-            '&:hover': {
-              backgroundColor: '#d5ffd8',
-            },
+            
           }}
         >
           <Typography gutterBottom variant="subtitle1" component="div" sx={{ fontWeight: 'bold' }}>

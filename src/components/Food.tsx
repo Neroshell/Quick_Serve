@@ -24,6 +24,7 @@ const Food: React.FC<FoodProps> = ({ onPageClick }) => {
       />
       <div>
         <SideBar 
+       
           firstText="New Orders" 
           secondText="Menu Categories" 
           thirdText="Order Summary" 
