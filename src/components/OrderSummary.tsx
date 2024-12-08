@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Minus, Plus, X } from 'lucide-react';
-import {Box, Typography, List, ListItem, Button, IconButton, Paper, Grid } from '@mui/material';
+import {Box, Typography, List, ListItem, Button, IconButton,  Paper, Grid } from '@mui/material';
+
 
 type FoodItem = {
   id: number;
@@ -14,10 +15,7 @@ export default function OrderSummary() {
     { id: 1, name: 'Pizza', quantity: 1, price: 12.99 },
     { id: 2, name: 'Burger', quantity: 2, price: 8.99 },
     { id: 3, name: 'Salad', quantity: 1, price: 7.99 },
-    { id: 4, name: 'Maltese Fish', quantity: 1, price: 6.99 },
-    { id: 5, name: 'Jollof rice', quantity: 1, price: 5.99 },
-    { id: 6, name: 'Grapes', quantity: 1, price: 4.99 },
-    { id: 7, name: 'Fish shawarma', quantity: 1, price: 3.99 },
+    
   ]);
 
   const incrementQuantity = (id: number) => {
@@ -95,6 +93,8 @@ export default function OrderSummary() {
       )}
 
             <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+              
+                
             <Button variant='contained' sx={{ marginTop: '30px', padding: '15px', backgroundColor: 'var(--primary-color)' }}>Send to Kitchen</Button>
             </div>
 

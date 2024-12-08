@@ -29,9 +29,15 @@ const DrinksContent = () => {
           backgroundColor: 'var(--main-background)'
         }}
       >
-        <Suspense fallback={<CircularProgress />}>
+         <Suspense fallback={<CircularProgress />}>
           {DrinksData.map((card) => (
-            <MenuCard key={card.id} image={card.image} foodName={card.drinkName} price={card.price} />
+            <MenuCard 
+              key={card.id} 
+              id={card.id}            // Pass the id prop here
+              image={card.image} 
+              foodName={card.drinkName} 
+              price={card.price} 
+            />
           ))}
         </Suspense>
       </Box>

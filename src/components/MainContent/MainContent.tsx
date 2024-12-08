@@ -30,10 +30,17 @@ const MainPage = () => {
         }}
       >
         <Suspense fallback={<CircularProgress />}>
-          {CardData.map((card) => (
-            <MenuCard key={card.id} image={card.image} foodName={card.foodName} price={card.price} />
-          ))}
+              {CardData.map((card) => (
+                <MenuCard
+                  key={card.id}
+                  id={card.id} // Pass the id prop here
+                  image={card.image}
+                  foodName={card.foodName}
+                  price={card.price}
+                />
+              ))}
         </Suspense>
+
       </Box>
     </Stack>
   );

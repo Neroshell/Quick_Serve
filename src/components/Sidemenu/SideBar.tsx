@@ -6,8 +6,10 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { ListItemButton, Box, Fab, Modal, Typography } from '@mui/material';
+import { ListItemButton, Box, Fab, Modal } from '@mui/material';
 import OrderSummary from '../OrderSummary';
+import Badge from '@mui/material/Badge';
+import { useSelectionStore } from '../Context/Zustand/selectionStore';
 
 interface SideBarProps {
   firstText: string;
@@ -16,6 +18,9 @@ interface SideBarProps {
 }
 
 const SideBar: React.FC<SideBarProps> = ({ firstText, secondText, thirdText }) => {
+
+
+  const selectionCount= useSelectionStore((state) => state.selectionCount)
   const [isModalOpen, setModalOpen] = useState(false);
 
   // Toggle Modal Visibility
@@ -73,7 +78,10 @@ const SideBar: React.FC<SideBarProps> = ({ firstText, secondText, thirdText }) =
         sx={{ position: 'fixed', bottom: 20, left: 20, background: 'var(--primary-color)' }}
         onClick={handleOpenModal}
       >
+        <Badge badgeContent={selectionCount} color="primary">
         <ShoppingCartIcon sx={{color: 'white' }} />
+        </Badge>
+        
       </Fab>
 
       {/* Modal for Order Summary */}
