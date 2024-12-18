@@ -1,46 +1,65 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+interface SelectedItem {
+  id: string;
+  foodName: string;
+  price: number;
+  quantity: number; // Add quantity to the SelectedItem interface
+}
+
 interface SelectionStore {
-  selectionCount: number;
-  selectedItems: Record<string, boolean>; // Stores the selection status of each item
-  increaseSelectionCount: () => void;
-  decreaseSelectionCount: () => void;
-  toggleItemSelection: (itemId: string) => void;
+  selectedItems: Record<string, boolean>;  // Track whether item is selected
+  selectedItemDetails: SelectedItem[];    // Track the full item details
+  selectionCount: number;  // Track the total number of selected items
+  toggleItemSelection: (item: SelectedItem) => void;  // Toggle item selection
+  incrementItemQuantity: (id: string) => void; // Increment quantity
+  decrementItemQuantity: (id: string) => void; // Decrement quantity
 }
 
 export const useSelectionStore = create(
   persist<SelectionStore>(
-    (set) => ({
-      selectionCount: 0,
+    (set, get) => ({
       selectedItems: {},
+      selectedItemDetails: [],
+      selectionCount: 0, // Initialize selection count
 
-      // Increment the selection count
-      increaseSelectionCount: () =>
-        set((state) => ({ selectionCount: state.selectionCount + 1 })),
+      toggleItemSelection: (item: SelectedItem) => {
+        const { selectedItems, selectedItemDetails, selectionCount } = get();
+        const isSelected = selectedItems[item.id] ?? false;
 
-      // Decrement the selection count
-      decreaseSelectionCount: () =>
-        set((state) => ({ selectionCount: state.selectionCount - 1 })),
+        const updatedItemDetails = isSelected
+          ? selectedItemDetails.filter((selected) => selected.id !== item.id)
+          : [...selectedItemDetails, { ...item, quantity: 1 }]; // Initialize quantity
 
-      // Toggle selection state of an item and update count accordingly
-      toggleItemSelection: (itemId: string) =>
-        set((state) => {
-          const isCurrentlySelected = state.selectedItems[itemId] ?? false;
-          const newSelectionCount = isCurrentlySelected
-            ? state.selectionCount - 1
-            : state.selectionCount + 1;
-          return {
-            selectionCount: newSelectionCount,
-            selectedItems: {
-              ...state.selectedItems,
-              [itemId]: !isCurrentlySelected,
-            },
-          };
-        }),
+        set({
+          selectedItems: {
+            ...selectedItems,
+            [item.id]: !isSelected,
+          },
+          selectedItemDetails: updatedItemDetails,
+          selectionCount: isSelected ? selectionCount - 1 : selectionCount + 1,
+        });
+      },
+
+      incrementItemQuantity: (id: string) => {
+        const { selectedItemDetails } = get();
+        const updatedItems = selectedItemDetails.map(item =>
+          item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+        set({ selectedItemDetails: updatedItems });
+      },
+
+      decrementItemQuantity: (id: string) => {
+        const { selectedItemDetails } = get();
+        const updatedItems = selectedItemDetails.map(item =>
+          item.id === id && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
+        );
+        set({ selectedItemDetails: updatedItems });
+      },
     }),
     {
-      name: 'selection-store', // The key for localStorage
+      name: 'selection-store',
     }
   )
 );
